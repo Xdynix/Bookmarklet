@@ -35,12 +35,12 @@ javascript:(function () {
 
     if (url.host.endsWith('bilibili.com')) {
         if (url.pathname === '/watchlater/') {
-            const watcherLaterPattern = url.hash.match(/#\/(av\d+)\/p(\d+)/i);
+            const watcherLaterPattern = url.hash.match(/#\/((av\d+)|(BV\S+))\/p(\d+)/i);
             if (watcherLaterPattern !== null) {
                 url.hash = '';
-                const avId = watcherLaterPattern[1];
-                const page = watcherLaterPattern[2];
-                url.pathname = '/video/' + avId + '/';
+                const videoId = watcherLaterPattern[1];
+                const page = watcherLaterPattern[4];
+                url.pathname = '/video/' + videoId + '/';
                 if (page !== '1') {
                     url.search = '?p=' + page;
                 }
