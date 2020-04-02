@@ -78,7 +78,7 @@ javascript:(function () {
     }
 
     if (url.host === 'www.zhihu.com') {
-        title = title.replace(/^\(\d+\s*条消息\)\s*/i, '');
+        title = title.replace(/^\(\d+\s*(条消息|封私信)\)\s*/i, '');
     }
 
     copyTextToClipboard(title + '\n' + url.toString());
