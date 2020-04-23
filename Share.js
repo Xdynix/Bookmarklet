@@ -55,7 +55,8 @@ javascript:(function () {
             'share_medium',
             'share_source',
             'bbid',
-            'ts'
+            'ts',
+            'zw',
         ].forEach(param => urlParams.delete(param));
 
         url.search = urlParams.toString();
