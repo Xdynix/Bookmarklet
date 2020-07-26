@@ -1,4 +1,4 @@
-# Bookmark Utils
+# Bookmarklet
 
 一些我自用的书签脚本。
 
