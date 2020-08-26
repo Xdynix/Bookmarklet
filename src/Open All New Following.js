@@ -1,16 +1,17 @@
 javascript:(function () {
-    'use strict';
-    const e = document.getElementById('js-mount-point-latest-following');
-    if (!e) {
-        alert('Mount point not found.');
-        return;
+  'use strict';
+  const element = document.getElementById('js-mount-point-latest-following');
+  if (!element) {
+    alert('Mount point not found.');
+    return;
+  }
+  try {
+    const data = JSON.parse(element.getAttribute('data-items'));
+    for (const illust of data) {
+      window.open(`https://www.pixiv.net/artworks/${illust['illustId']}`, '_blank');
     }
-    try {
-        const data = JSON.parse(e.getAttribute('data-items'));
-        for (const illust of data) {
-            window.open(`https://www.pixiv.net/artworks/${illust['illustId']}`, '_blank');
-        }
-    } catch (e) {
-        alert(String(e));
-    }
+  } catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
 })();
