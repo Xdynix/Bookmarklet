@@ -31,20 +31,16 @@ javascript:(function () {
   }
 
   let title = document.title;
-  const url = new URL(window.location.href);
+  let url = new URL(window.location.href);
 
   if (url.host.endsWith('bilibili.com')) {
-    if (url.pathname === '/watchlater/') {
-      const watcherLaterPattern = url.hash.match(/#\/((av\d+)|(BV\S+))\/p(\d+)/i);
-      if (watcherLaterPattern !== null) {
-        url.hash = '';
-        const videoId = watcherLaterPattern[1];
-        const page = watcherLaterPattern[4];
-        url.pathname = '/video/' + videoId + '/';
-        if (page !== '1') {
-          url.search = '?p=' + page;
-        }
+    if (url.pathname.startsWith('/medialist/play')) {
+      const titleLocation = document.getElementsByClassName('play-title-location');
+      if (!titleLocation.length) {
+        alert('Title location not found.');
+        return;
       }
+      url = new URL(titleLocation[0].getAttribute('href'));
     }
 
     const urlParams = new URLSearchParams(url.search);
@@ -58,6 +54,7 @@ javascript:(function () {
       'ts',
       'zw',
     ].forEach(param => urlParams.delete(param));
+    if (urlParams.get('p') === '1') urlParams.delete('p');
 
     url.search = urlParams.toString();
   }
