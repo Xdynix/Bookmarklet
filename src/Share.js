@@ -44,16 +44,10 @@ javascript:(function () {
     }
 
     const urlParams = new URLSearchParams(url.search);
-    [
-      'spm_id_from',
-      'from',
-      'seid',
-      'share_medium',
-      'share_source',
-      'bbid',
-      'ts',
-      'zw',
-    ].forEach(param => urlParams.delete(param));
+    const searchKeyWhitelist = ['p', 't'];
+    for(const key of Array.from(urlParams.keys())) {
+      if (!searchKeyWhitelist.includes(key)) urlParams.delete(key);
+    }
     if (urlParams.get('p') === '1') urlParams.delete('p');
 
     url.search = urlParams.toString();
