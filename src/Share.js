@@ -35,7 +35,7 @@ javascript:(function () {
 
   if (url.host.endsWith('bilibili.com')) {
     if (url.pathname.startsWith('/medialist/play')) {
-      const titleLocation = document.getElementsByClassName('play-title-location');
+      const titleLocation = document.getElementsByClassName('tit');
       if (!titleLocation.length) {
         alert('Title location not found.');
         return;
