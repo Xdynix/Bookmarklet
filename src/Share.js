@@ -44,9 +44,9 @@ javascript:(function () {
     }
 
     const urlParams = new URLSearchParams(url.search);
-    const searchKeyWhitelist = ['p', 't'];
+    const searchKeyAllowList = ['p', 't'];
     for(const key of Array.from(urlParams.keys())) {
-      if (!searchKeyWhitelist.includes(key)) urlParams.delete(key);
+      if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
     }
     if (urlParams.get('p') === '1') urlParams.delete('p');
 
@@ -71,6 +71,17 @@ javascript:(function () {
 
   if (url.host === 'www.zhihu.com') {
     title = title.replace(/^\(\d+\s*(条消息|封私信)(\s*\/\s*\d+\s*(条消息|封私信))?\)\s*/i, '');
+  }
+
+  if (url.host === 'item.taobao.com' && url.pathname === '/item.htm') {
+    url.hash = '';
+
+    const urlParams = new URLSearchParams(url.search);
+    const searchKeyAllowList = ['id'];
+    for(const key of Array.from(urlParams.keys())) {
+      if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
+    }
+    url.search = urlParams.toString();
   }
 
   copyTextToClipboard(title + '\n' + url.toString());
