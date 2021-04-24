@@ -73,7 +73,7 @@ javascript:(function () {
     title = title.replace(/^\(\d+\s*(条消息|封私信)(\s*\/\s*\d+\s*(条消息|封私信))?\)\s*/i, '');
   }
 
-  if (url.host === 'item.taobao.com' && url.pathname === '/item.htm') {
+  if ((url.host === 'item.taobao.com' || url.host === 'detail.tmall.com') && url.pathname === '/item.htm') {
     url.hash = '';
 
     const urlParams = new URLSearchParams(url.search);
