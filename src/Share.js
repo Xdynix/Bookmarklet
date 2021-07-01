@@ -30,6 +30,13 @@ javascript:(function () {
     document.body.removeChild(textArea);
   }
 
+  function onCopy(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const clipboardData = e.clipboardData || window.clipboardData;
+    clipboardData.setData('text/plain', window.getSelection().toString());
+  }
+
   let title = document.title;
   let url = new URL(window.location.href);
 
@@ -82,6 +89,10 @@ javascript:(function () {
       if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
     }
     url.search = urlParams.toString();
+  }
+
+  if (url.host === 'www.1point3acres.com') {
+    document.addEventListener('copy', onCopy);
   }
 
   copyTextToClipboard(title + '\n' + url.toString());
