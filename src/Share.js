@@ -1,35 +1,6 @@
 javascript:(function () {
   'use strict';
 
-  function copyTextToClipboard(text, log = false) {
-    const textArea = document.createElement('textarea');
-    textArea.style.position = 'fixed';
-    textArea.style.top = '0';
-    textArea.style.left = '0';
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-    textArea.style.padding = '0';
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-      const successful = document.execCommand('copy');
-      if (log) {
-        const msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Copying text command was ' + msg);
-      }
-    } catch (error) {
-      if (log) {
-        console.error(error);
-      }
-    }
-    document.body.removeChild(textArea);
-  }
-
   function onCopy(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -52,7 +23,7 @@ javascript:(function () {
 
     const urlParams = new URLSearchParams(url.search);
     const searchKeyAllowList = ['p', 't'];
-    for(const key of Array.from(urlParams.keys())) {
+    for (const key of Array.from(urlParams.keys())) {
       if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
     }
     if (urlParams.get('p') === '1') urlParams.delete('p');
@@ -85,7 +56,7 @@ javascript:(function () {
 
     const urlParams = new URLSearchParams(url.search);
     const searchKeyAllowList = ['id'];
-    for(const key of Array.from(urlParams.keys())) {
+    for (const key of Array.from(urlParams.keys())) {
       if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
     }
     url.search = urlParams.toString();
@@ -95,5 +66,5 @@ javascript:(function () {
     document.addEventListener('copy', onCopy);
   }
 
-  copyTextToClipboard(title + '\n' + url.toString());
+  navigator.clipboard.writeText(title + '\n' + url.toString());
 })();
