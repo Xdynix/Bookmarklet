@@ -60,11 +60,17 @@ javascript:(function () {
       if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
     }
     url.search = urlParams.toString();
+    title = title.replace(/tmall\.com/i, '');
   }
 
   if (url.host === 'www.1point3acres.com') {
     document.addEventListener('copy', onCopy);
   }
 
-  navigator.clipboard.writeText(title + '\n' + url.toString());
+  navigator.clipboard
+    .writeText(title + '\n' + url.toString())
+    .catch(e => {
+      alert(`Copy failed. Reason: ${e}`);
+      console.error(e);
+    });
 })();

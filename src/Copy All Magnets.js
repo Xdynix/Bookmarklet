@@ -8,7 +8,12 @@ javascript:(function () {
       .map((i, e) => $(e).attr('href'))
       .get()
       .join('\n');
-    navigator.clipboard.writeText(links);
+    navigator.clipboard
+      .writeText(links)
+      .catch(e => {
+        alert(`Copy failed. Reason: ${e}`);
+        console.error(e);
+      });
   };
   document.head.appendChild(jqueryTag);
 })();
