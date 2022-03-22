@@ -1,8 +1,7 @@
 javascript:(function () {
   'use strict';
-  const jqueryTag = document.createElement('script');
-  jqueryTag.src = '//code.jquery.com/jquery-latest.min.js';
-  jqueryTag.onload = function () {
+
+  function main() {
     const $ = jQuery.noConflict();
     const storage = window.sessionStorage;
     const maxOpen = 10;
@@ -25,6 +24,10 @@ javascript:(function () {
       console.error(error);
       alert(error.message);
     }
-  };
+  }
+
+  const jqueryTag = document.createElement('script');
+  jqueryTag.src = '//code.jquery.com/jquery-3.6.0.min.js';
+  jqueryTag.onload = main;
   document.head.appendChild(jqueryTag);
 })();

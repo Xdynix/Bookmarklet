@@ -5,4 +5,4 @@ javascript: (function (e, s) {
     console.log('jQuery injected');
   };
   document.head.appendChild(e);
-})(document.createElement('script'), '//code.jquery.com/jquery-latest.min.js')
+})(document.createElement('script'), '//code.jquery.com/jquery-3.6.0.min.js')

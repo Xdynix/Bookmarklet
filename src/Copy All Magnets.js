@@ -1,8 +1,7 @@
 javascript:(function () {
   'use strict';
-  const jqueryTag = document.createElement('script');
-  jqueryTag.src = '//code.jquery.com/jquery-latest.min.js';
-  jqueryTag.onload = function () {
+
+  function main() {
     const $ = jQuery.noConflict();
     const links = $('[href^="magnet:?"]')
       .map((i, e) => $(e).attr('href'))
@@ -14,6 +13,10 @@ javascript:(function () {
         alert(`Copy failed. Reason: ${e}`);
         console.error(e);
       });
-  };
+  }
+
+  const jqueryTag = document.createElement('script');
+  jqueryTag.src = '//code.jquery.com/jquery-3.6.0.min.js';
+  jqueryTag.onload = main;
   document.head.appendChild(jqueryTag);
 })();
