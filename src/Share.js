@@ -8,6 +8,14 @@ javascript:(function () {
     clipboardData.setData('text/plain', window.getSelection().toString());
   }
 
+  function filterURLSearchParam(search, allowList) {
+    const urlParams = new URLSearchParams(search);
+    for (const key of Array.from(urlParams.keys())) {
+      if (!allowList.includes(key)) urlParams.delete(key);
+    }
+    return urlParams.toString();
+  }
+
   let title = document.title;
   let url = new URL(window.location.href);
 
@@ -21,13 +29,9 @@ javascript:(function () {
       url = new URL(titleLocation[0].getAttribute('href'));
     }
 
+    url.search = filterURLSearchParam(url.search, ['p', 't']);
     const urlParams = new URLSearchParams(url.search);
-    const searchKeyAllowList = ['p', 't'];
-    for (const key of Array.from(urlParams.keys())) {
-      if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
-    }
     if (urlParams.get('p') === '1') urlParams.delete('p');
-
     url.search = urlParams.toString();
   }
 
@@ -54,17 +58,17 @@ javascript:(function () {
   if ((url.host === 'item.taobao.com' || url.host === 'detail.tmall.com') && url.pathname === '/item.htm') {
     url.hash = '';
 
-    const urlParams = new URLSearchParams(url.search);
-    const searchKeyAllowList = ['id'];
-    for (const key of Array.from(urlParams.keys())) {
-      if (!searchKeyAllowList.includes(key)) urlParams.delete(key);
-    }
-    url.search = urlParams.toString();
+    url.search = filterURLSearchParam(url.search, ['id']);
     title = title.replace(/tmall\.com/i, '');
   }
 
   if (url.host === 'www.1point3acres.com') {
     document.addEventListener('copy', onCopy);
+  }
+
+  if (url.host === 'mp.weixin.qq.com') {
+    url.search = filterURLSearchParam(url.search, ['__biz', 'mid', 'idx', 'sn']);
+    url.hash = '';
   }
 
   navigator.clipboard
