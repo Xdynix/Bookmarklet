@@ -20,13 +20,20 @@ javascript:(function () {
   let url = new URL(window.location.href);
 
   if (url.host.endsWith('bilibili.com')) {
-    if (url.pathname.startsWith('/medialist/play')) {
-      const titleLocation = document.getElementsByClassName('tit');
+    if (url.pathname.startsWith('/list/watchlater')) {
+      const titleLocation = document.getElementsByClassName('video-title-href');
       if (!titleLocation.length) {
         alert('Title location not found.');
         return;
       }
-      url = new URL(titleLocation[0].getAttribute('href'));
+
+      title = titleLocation[0].textContent;
+
+      let href = titleLocation[0].getAttribute('href');
+      if (href.startsWith('//')) {
+        href = 'https:' + href;
+      }
+      url = new URL(href);
     }
 
     url.search = filterURLSearchParam(url.search, ['p', 't']);
